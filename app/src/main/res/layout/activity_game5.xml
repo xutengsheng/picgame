@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.game5.Game5Activity">
+
+    <TextView
+        android:background="@color/green"
+        android:padding="@dimen/dp_8"
+        android:id="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/sp_18"
+        android:text="@string/sort_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:padding="@dimen/dp_5"
+        android:visibility="invisible"
+        android:id="@+id/tv_result"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="@dimen/dp_50"
+        app:layout_constraintTop_toBottomOf="@id/iv_target"
+        android:id="@+id/cl_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_left"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btn_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_marginLeft="@dimen/dp_20"
+            app:layout_constraintLeft_toRightOf="@id/btn_left"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/btn_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_sort"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rlv1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/rlv2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginLeft="@dimen/dp_20"
+            app:layout_constraintLeft_toRightOf="@id/rlv1"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/rlv2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.xts.picgame.common.CustomImageView
+        android:layout_marginTop="@dimen/dp_40"
+        android:id="@+id/iv_target"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
