@@ -98,6 +98,7 @@ public class Game3Activity2 extends AppCompatActivity {
                 //2.目标图片远远比列表图片小,target.l>list.l && target.t>list.t&&target.r<list.r&&target.b<list.b
                 //3.列表图片比目标图片小 target.l<list.l && target.t<list.t && target.r>list.r &&target.b>list.b
 
+                //
 
                 for (int i = 0; i < mLocationBeans.size(); i++) {
                     LocationBean bean = mLocationBeans.get(i);

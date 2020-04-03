@@ -1,5 +1,6 @@
 package com.xts.picgame.ui.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        initPers();
+    }
+
+    private void initPers() {
+        String[] pers = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        ActivityCompat.requestPermissions(this,pers,100);
     }
 
     private void initView() {
@@ -101,16 +112,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
+                intent.putExtra(Constant.DATA,Game1Activity.TYPE_WHAT);
                 intent.setClass(this, Game1Activity.class);
                 break;
             case 1:
                 intent.setClass(this, Game2Activity.class);
                 break;
             case 2:
-                intent.putExtra(Constant.DATA,Game3Activity2.TYPE_EQUAL);
-                intent.setClass(this, Game3Activity2.class);
-                /*intent.putExtra(Constant.DATA,Game3Activity.TYPE_EQUAL);
-                intent.setClass(this, Game3Activity.class);*/
+                /*intent.putExtra(Constant.DATA,Game3Activity2.TYPE_EQUAL);
+                intent.setClass(this, Game3Activity2.class);*/
+                intent.putExtra(Constant.DATA,Game3Activity.TYPE_EQUAL);
+                intent.setClass(this, Game3Activity.class);
                 break;
             case 3:
                 intent.putExtra(Constant.DATA,Game3Activity.TYPE_SAME);
@@ -118,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 intent.setClass(this, Game5Activity.class);
+                break;
+            case 5:
+                intent.putExtra(Constant.DATA,Game1Activity.TYPE_PRACTICE);
+                intent.setClass(this, Game1Activity.class);
                 break;
         }
         startActivity(intent);

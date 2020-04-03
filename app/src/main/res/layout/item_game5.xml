@@ -3,5 +3,5 @@
     android:id="@+id/iv"
     android:padding="@dimen/dp_5"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/dp_90">
 </ImageView>
