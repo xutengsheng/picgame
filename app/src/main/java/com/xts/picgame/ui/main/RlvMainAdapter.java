@@ -21,8 +21,6 @@ public class RlvMainAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv,item);
-
         Glide.with(mContext).load(mImages.get(helper.getLayoutPosition())).into((ImageView) helper.getView(R.id.iv));
     }
 }

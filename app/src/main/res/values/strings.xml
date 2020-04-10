@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">PicGame</string>
-    <string name="game1">game1</string>
-    <string name="game2">game2</string>
-    <string name="game3">game3</string>
-    <string name="game4">game4</string>
-    <string name="game5">game5</string>
-    <string name="game6">game6</string>
     <string name="how_to_play">How to Play</string>
     <string name="what_is_it">What is it?</string>
     <string name="start_game">Start Game</string>
@@ -21,4 +15,33 @@
     <string name="try_again">Try again !</string>
     <string name="put_same">Put with Same</string>
     <string name="sort_pic">Sort the pictures</string>
+    <string name="pic_identify">Picture Identification</string>
+    <string name="identical_match">Identical Matching</string>
+    <string name="similar_match">Similar Matching</string>
+    <string name="sort">Sorting</string>
+    <string name="expressive_label">Expressive Labeling</string>
+    <string name="receptive_label">Receptive Labeling</string>
+    <string name="apple">apple</string>
+    <string name="cookies">cookies</string>
+    <string name="cat">cat</string>
+    <string name="bird">bird</string>
+    <string name="airplane">airplane</string>
+    <string name="car">car</string>
+    <string name="shoe">shoe</string>
+    <string name="candy">candy</string>
+    <string name="chair">chair</string>
+    <string name="bed">bed</string>
+    <string name="bike">bike</string>
+    <string name="ball">ball</string>
+    <string name="cup">cup</string>
+    <string name="spoon">spoon</string>
+    <string name="flower">flower</string>
+    <string name="fail_o">ouch</string>
+    <string name="settings">settings</string>
+    <string name="max_number">Max number is</string>
+    <string name="min_number">Min number is</string>
+    <string name="pic_number">Picture number</string>
+    <string name="no_settings">No settings</string>
+    <string name="error_repeat_number">Error repeat number</string>
+    <string name="choose_pic">Choose Game pictures</string>
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.xts.picgame.common.Constant;
 import com.xts.picgame.model.apis.ApiServer;
+import com.xts.picgame.utils.LogUtils;
 import com.xts.picgame.utils.SpUtils;
 import com.xts.picgame.utils.SystemUtils;
 
@@ -76,12 +77,11 @@ public class HttpManager {
     }
 
     private OkHttpClient getOkhttp() {
-        File file = new File(Constant.PATH_CACHE);
-        Cache cache = new Cache(file, 100 * 1024 * 1024);
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addInterceptor(new HeadersInterceptor())
-                .addNetworkInterceptor(new NetWorkInterceptor())
-                .cache(cache);
+        /*File file = new File(Constant.PATH_CACHE);
+        Cache cache = new Cache(file, 100 * 1024 * 1024);*/
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                //.addNetworkInterceptor(new NetWorkInterceptor());
+                //.cache(cache);
         if (Constant.DEBUG) {
             builder.addInterceptor(new LoggingInterceptor());
         }
@@ -159,9 +159,10 @@ public class HttpManager {
             Log.i("Request:", String.format("Sending request %s %n %s %n%s", request.url(), sb.toString(),request.headers()));
             Response response = chain.proceed(request);
             long now = System.nanoTime();
+            //LogUtils.print(response.body().string());
             Log.i("Received:", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (now - time) / 1e6d, response.headers()));
 
-            Log.i("Data:", response.peekBody(response.body().contentLength()).string());
+            Log.i("Data:", response.peekBody(1024*1024).string());
             return response;
         }
     }

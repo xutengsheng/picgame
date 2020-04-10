@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game5.Game5Activity">
+    tools:context=".ui.game5.SortActivity">
 
     <TextView
         android:background="@color/green"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game2.Game2Activity">
+    tools:context=".ui.game2.ExpressiveActivity">
 
     <TextView
         android:id="@+id/tv_title"

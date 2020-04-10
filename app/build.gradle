@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin 步骤3
 
 android {
     compileSdkVersion 29
@@ -25,9 +26,19 @@ android {
     }
 
     sourceSets {
-        main{
+        main {
             jniLibs.srcDir "libs"
         }
+    }
+
+    //greendao配置  步骤5
+    greendao {
+        //数据库版本号，升级时修改
+        schemaVersion 1
+        //生成的DAO，DaoMaster和DaoSession的包路径。默认与表实体所在的包路径相同
+        daoPackage 'com.xts.picgame.db'
+        //生成源文件的路径。默认源文件目录是在build目录中的(build/generated/source/greendao)
+        targetGenDir 'src/main/java'
     }
 
 }
@@ -73,5 +84,8 @@ dependencies {
     //RecyclerView Adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
 
+    //greenDAO配置  步骤4
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'org.greenrobot:greendao-generator:3.2.2'
 
 }
