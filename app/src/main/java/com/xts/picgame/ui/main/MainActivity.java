@@ -1,9 +1,12 @@
 package com.xts.picgame.ui.main;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,6 +46,8 @@ import com.xts.picgame.ui.game5.SortActivity;
 import com.xts.picgame.ui.settings.ExpressiveSettingActivity;
 import com.xts.picgame.ui.settings.MatchSettingActivity;
 import com.xts.picgame.ui.settings.PicIdentifySettingActivity;
+import com.xts.picgame.ui.settings.SortSettingsActivity;
+import com.xts.picgame.utils.DownLoadUtil;
 import com.xts.picgame.utils.LogUtils;
 import com.xts.picgame.utils.RxUtils;
 import com.xts.picgame.utils.ThreadPoolManager;
@@ -140,24 +145,19 @@ public class MainActivity extends AppCompatActivity {
         if (netBean.getData() != null && netBean.getData().size() > 0) {
             List<DataBean> data = netBean.getData();
             //下载图片+是否要插入数据库
-            downImages(data);
-            //下载语音
-            downVoice();
+            downImages(data, netBean.getTypeCount());
         }
     }
 
-    private void downVoice() {
-
-    }
-
-    private void downImages(List<DataBean> data) {
-        mMax = data.size();
+    private void downImages(List<DataBean> data, int typeCount) {
+        mMax = data.size() + typeCount;
+        SparseArray<String> types = new SparseArray<>();
         for (int i = 0; i < data.size(); i++) {
             DataBean dataBean = data.get(i);
             List<DataBean> list = mDataBeanDao.queryBuilder().where(DataBeanDao.Properties.Imageid.eq(dataBean.getImageid())).list();
-            if (list!= null && list.size()>0){
+            if (list != null && list.size() > 0) {
                 //有数据不插入,避免把原来的状态弄没有了
-            }else {
+            } else {
                 //没有数据,插入
                 mDataBeanDao.insertOrReplaceInTx(dataBean);
             }
@@ -171,7 +171,37 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+            //下载语音
+            File file = new File(DownLoadUtil.getPath(dataBean.getMusic()));
+            if (TextUtils.isEmpty(types.get(dataBean.getTypeid()))) {
+                types.append(dataBean.getTypeid(),dataBean.getTname());
+                if (!file.exists() || file.length() == 0) {
+                    DownLoadUtil.downVoice(dataBean.getMusic(), new DownLoadUtil.ResultCallBack() {
+                        @Override
+                        public void onFail(String message) {
+
+                        }
+
+                        @Override
+                        public void onProgress(long progress, long max) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String path) {
+                            LogUtils.print("voice path:" + path);
+                            mProgress++;
+                            setProgress();
+                        }
+                    });
+                } else {
+                    mProgress++;
+                    setProgress();
+                }
+            }
         }
+
     }
 
     public void setProgress() {
@@ -181,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 mPb.setProgress(mProgress);
                 mTvProgress.setText(mProgress + " / " + mMax);
 
-                if (mProgress == mMax) {
+                if (mProgress >= mMax) {
                     mProgressPop.dismiss();
                     ToastUtil.showToast("数据加载成功");
                 }
@@ -253,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.pic_identify:
-                        PicIdentifySettingActivity.startAct(MainActivity.this,mTitles.get(0),PicIdentifyActivity.TYPE_PIC_IDENTIFY);
+                        PicIdentifySettingActivity.startAct(MainActivity.this, mTitles.get(0), PicIdentifyActivity.TYPE_PIC_IDENTIFY);
                         break;
                     case R.id.expressive_label:
                         ExpressiveSettingActivity.startAct(MainActivity.this, mTitles.get(1));
@@ -265,11 +295,10 @@ public class MainActivity extends AppCompatActivity {
                         MatchSettingActivity.startAct(MainActivity.this, mTitles.get(3), MatchActivity.TYPE_SIMILAR);
                         break;
                     case R.id.sort:
-                        //ExpressiveSettingActivity.startAct(MainActivity.this,mTitles.get(4));
-                        ToastUtil.showToast(BaseApp.getRes().getString(R.string.no_settings));
+                        SortSettingsActivity.startAct(MainActivity.this,mTitles.get(4));
                         break;
                     case R.id.receptive_label:
-                        PicIdentifySettingActivity.startAct(MainActivity.this,mTitles.get(5),PicIdentifyActivity.TYPE_RECEPTIVE);
+                        PicIdentifySettingActivity.startAct(MainActivity.this, mTitles.get(5), PicIdentifyActivity.TYPE_RECEPTIVE);
                         break;
                 }
                 return true;
@@ -374,6 +403,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (mProgressPop != null){
+            mProgressPop.dismiss();
+        }
         super.onDestroy();
         mSubscriber.dispose();
     }

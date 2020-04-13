@@ -29,6 +29,7 @@ import com.xts.picgame.model.bean.DataBean;
 import com.xts.picgame.model.bean.LocationBean;
 import com.xts.picgame.ui.settings.RlvChoosePicAdapter;
 import com.xts.picgame.utils.LogUtils;
+import com.xts.picgame.utils.MediaPlayerUtil;
 import com.xts.picgame.utils.RandomImageUtil;
 import com.xts.picgame.utils.SpUtils;
 
@@ -335,10 +336,24 @@ public class MatchActivity extends AppCompatActivity {
         /*FlowerCollector.onEvent(TtsDemo.this, "tts_play");*/
 
         // 设置参数
-        setParam();
+        /*setParam();
         int code = mTts.startSpeaking(str, mTtsListener);
         if (code != ErrorCode.SUCCESS) {
             showTip("语音合成失败,错误码: " + code + ",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
+        }*/
+
+        if (str.equals(mGoodJob)){
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.right);
+        }else if (str.equals(mTryAgain)){
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.wrong);
+        }else if (str.equals(mSame)){
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.put_similar);
+        }else {
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.put_equal);
         }
     }
 

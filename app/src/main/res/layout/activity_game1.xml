@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/dp_50"
         android:id="@+id/iv"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:src="@drawable/ic_apple_001"
+        android:src="@drawable/arrow_right"
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_width="match_parent"

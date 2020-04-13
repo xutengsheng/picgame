@@ -23,6 +23,7 @@ import com.xts.picgame.apps.BaseApp;
 import com.xts.picgame.common.Constant;
 import com.xts.picgame.model.bean.DataBean;
 import com.xts.picgame.ui.settings.RlvChoosePicAdapter;
+import com.xts.picgame.utils.MediaPlayerUtil;
 import com.xts.picgame.utils.RandomImageUtil;
 import com.xts.picgame.utils.ToastUtil;
 
@@ -62,7 +63,7 @@ public class PicIdentifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1);
-        mRandomImageUtil = new RandomImageUtil(RlvChoosePicAdapter.TYPE_IDENTIFY);
+
         // 初始化合成对象
         mTts = SpeechSynthesizer.createSynthesizer(this, mTtsInitListener);
 
@@ -77,12 +78,15 @@ public class PicIdentifyActivity extends AppCompatActivity {
 
     private void initView() {
         mGameType = getIntent().getIntExtra(Constant.DATA, 0);
-
+        if (mGameType == TYPE_PIC_IDENTIFY) {
+            mRandomImageUtil = new RandomImageUtil(RlvChoosePicAdapter.TYPE_IDENTIFY);
+        } else {
+            mRandomImageUtil = new RandomImageUtil(RlvChoosePicAdapter.TYPE_RECEPTIVE);
+        }
         mBeans = new ArrayList<>();
         addRandom();
         addRandom();
         showPic(mCurrentPosition);
-
     }
 
     private void showPic(int position) {
@@ -91,7 +95,7 @@ public class PicIdentifyActivity extends AppCompatActivity {
         if (mGameType == TYPE_RECEPTIVE) {
             mTvTitle.setText(mStr);
             voice(mStr);
-        }else {
+        } else {
             mTvTitle.setText(mTitle);
             voice(mTitle);
         }
@@ -146,10 +150,21 @@ public class PicIdentifyActivity extends AppCompatActivity {
         /*FlowerCollector.onEvent(TtsDemo.this, "tts_play");*/
 
         // 设置参数
-        setParam();
+        /*setParam();
         int code = mTts.startSpeaking(str, mTtsListener);
         if (code != ErrorCode.SUCCESS) {
             showTip("语音合成失败,错误码: " + code + ",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
+        }*/
+
+        //本地语音
+        if (str.equals(mStr)) {
+            MediaPlayerUtil.getInstance()
+                    .setData(mBeans.get(mCurrentPosition).getMusic());
+        } else if (str.equals(mTitle)) {
+            //播放raw资源
+            //todo 这是什么图片?
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.what_pic_is);
         }
     }
 

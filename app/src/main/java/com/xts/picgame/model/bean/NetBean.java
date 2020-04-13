@@ -14,7 +14,16 @@ public class NetBean {
     private int status;
     private String message;
     private int version;
+    private int typeCount;
     private List<DataBean> data;
+
+    public int getTypeCount() {
+        return typeCount;
+    }
+
+    public void setTypeCount(int typeCount) {
+        this.typeCount = typeCount;
+    }
 
     public int getStatus() {
         return status;

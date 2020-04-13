@@ -9,7 +9,8 @@ import java.io.File;
 public interface Constant {
     boolean DEBUG = true;
 
-    String PATH_DATA = BaseApp.sBaseApp.getCacheDir().getAbsolutePath();
+    //String PATH_DATA = BaseApp.sBaseApp.getCacheDir().getAbsolutePath();
+    String PATH_DATA = BaseApp.sBaseApp.getExternalCacheDir().getAbsolutePath();
 
     String VOICE_PATH = PATH_DATA + "/voice/";
 

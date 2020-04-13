@@ -25,6 +25,7 @@ import com.xts.picgame.common.Constant;
 import com.xts.picgame.model.bean.DataBean;
 import com.xts.picgame.ui.settings.RlvChoosePicAdapter;
 import com.xts.picgame.utils.LogUtils;
+import com.xts.picgame.utils.MediaPlayerUtil;
 import com.xts.picgame.utils.RandomAllImageUtil;
 import com.xts.picgame.utils.RandomImageUtil;
 import com.xts.picgame.utils.SpUtils;
@@ -192,10 +193,23 @@ public class ExpressiveActivity extends AppCompatActivity {
         /*FlowerCollector.onEvent(TtsDemo.this, "tts_play");*/
 
         // 设置参数
-        setParam();
+        /*setParam();
         int code = mTts.startSpeaking(str, mTtsListener);
         if (code != ErrorCode.SUCCESS) {
             showTip("语音合成失败,错误码: " + code+",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
+        }*/
+
+        //本地语音
+        //todo 这是什么图片?
+        if (str.equals(mRight)) {
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.right);
+        }else if (str.equals(mNotQuite)){
+            //播放raw资源
+            MediaPlayerUtil.getInstance()
+                    .setData(R.raw.wrong);
+        }else {
+            //找到 xxx
         }
     }
 

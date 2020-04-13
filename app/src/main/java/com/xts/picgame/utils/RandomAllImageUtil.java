@@ -171,4 +171,8 @@ public class RandomAllImageUtil {
     public SparseArray<ArrayList<DataBean>> getAll(){
         return all;
     }
+
+    public ArrayList<Integer> getType() {
+        return mTypeList;
+    }
 }

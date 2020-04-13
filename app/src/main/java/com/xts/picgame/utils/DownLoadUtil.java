@@ -26,6 +26,7 @@ public class DownLoadUtil {
 
     /**
      * 保存文件
+     *
      * @param inputStream
      * @param path
      * @param callBack
@@ -33,6 +34,16 @@ public class DownLoadUtil {
      */
     private static void saveFiles(InputStream inputStream, String path, ResultCallBack callBack, long max) {
         File file = new File(path);
+        if (!file.getParentFile().exists()){
+            boolean mkdir = file.getParentFile().mkdirs();
+        }
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         int len;
         byte[] bytes = new byte[4096];
         //读写的进度
@@ -40,17 +51,21 @@ public class DownLoadUtil {
         try {
             //输出流
             FileOutputStream fos = new FileOutputStream(file);
-            while ((len = inputStream.read(bytes)) != -1){
-                fos.write(bytes,0,len);
-                count+=len;
+            while ((len = inputStream.read(bytes)) != -1) {
+                fos.write(bytes, 0, len);
+                count += len;
                 //传递当前读写的进度
-                callBack.onProgress(count,max);
-                Log.d(TAG, "progress: "+count);
+                if (callBack != null) {
+                    callBack.onProgress(count, max);
+                }
+                Log.d(TAG, "progress: " + count);
             }
             fos.close();
             inputStream.close();
             //完成写入
-            callBack.onSuccess(path);
+            if (callBack != null) {
+                callBack.onSuccess(path);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,7 +84,7 @@ public class DownLoadUtil {
                     public void onNext(ResponseBody responseBody) {
                         InputStream inputStream = responseBody.byteStream();
                         String path = getPath(urlPath);
-                        saveFiles(inputStream,path,callBack,responseBody.contentLength());
+                        saveFiles(inputStream, path, callBack, responseBody.contentLength());
                     }
 
                     @Override
@@ -84,16 +99,20 @@ public class DownLoadUtil {
                 });
     }
 
-    //获取保存语音的路径
+    /**
+     * //获取保存语音的路径
+     * @param urlPath 语音链接
+     * @return
+     */
     public static String getPath(String urlPath) {
-        String path = SystemUtils.md5(urlPath)+".mp3";
-        return Constant.VOICE_PATH+path;
+        String path = SystemUtils.md5(urlPath) + ".mp3";
+        return Constant.VOICE_PATH + path;
     }
 
     /**
      * 结果的回调
      */
-    public interface ResultCallBack{
+    public interface ResultCallBack {
         void onFail(String message);
 
         void onProgress(long progress, long max);

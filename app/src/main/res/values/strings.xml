@@ -44,4 +44,5 @@
     <string name="no_settings">No settings</string>
     <string name="error_repeat_number">Error repeat number</string>
     <string name="choose_pic">Choose Game pictures</string>
+    <string name="choose_pic_type">选择图片的种类</string>
 </resources>
